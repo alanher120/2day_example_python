@@ -1,0 +1,44 @@
+kind: pipeline
+name: cicd
+
+steps:
+- name: hello
+  image: busybox
+  commands:
+  - echo hello
+  
+- name: check-code-style
+  image: python:3.6
+  commands:
+  - pip install --upgrade pip
+  - pip install flake8
+  - flake8 src/app.py
+  
+- name: docker-build-and-push
+  image: plugins/docker
+  settings:
+    repo: "systexdevops/2day_example_python"
+    dockerfile: docker/Dockerfile
+    tags: [ "${DRONE_COMMIT_SHA:0:8}","latest" ]
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+      
+- name: deploy-to-staging
+  image: systexdevops/drone-kubectl
+  settings:
+    kubernetes_server:
+      from_secret: k8s_server
+    #kubernetes_cert:
+    #  from_secret: k8s_cert
+    kubernetes_token:
+      from_secret: k8s_token
+  commands: 
+  - |
+    helm template \
+      --set=externalIp=$(curl -s 169.254.169.254/computeMetadata/v1beta1/instance/network-interfaces/0/access-configs/0/external-ip) \
+      --set=image=systexdevops/2day_example_python \
+      --set=tag=${DRONE_COMMIT_SHA:0:8} \
+      staging/ |
+    kubectl apply -f -
