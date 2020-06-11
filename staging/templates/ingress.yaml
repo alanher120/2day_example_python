@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: staging-ingress
+  labels:
+    app: staging
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: staging.{{ .Values.externalIp }}.nip.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: staging-service
+          servicePort: 3000
