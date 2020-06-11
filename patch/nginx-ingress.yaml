@@ -1,0 +1,17 @@
+spec:
+  template:
+    spec:
+      containers:
+        ports:
+        - containerPort: 80
+          hostPort: 80
+          name: 80tcp800
+          protocol: TCP
+        - containerPort: 443
+          hostPort: 443
+          name: 443tcp4430
+          protocol: TCP
+        - containerPort: 10254
+          hostPort: 10254
+          name: 10254tcp102540
+          protocol: TCP
