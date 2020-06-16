@@ -1,4 +1,6 @@
-metadata:
-  annotations:
-    prometheus.io/port: "10254"
-    prometheus.io/scrape: "true"
+spec:
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
