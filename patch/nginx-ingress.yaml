@@ -1,9 +1,4 @@
-spec:
-  template:
-    spec:
-      containers:
-        ports:
-        - containerPort: 10254
-          hostPort: 10254
-          name: 10254tcp102540
-          protocol: TCP
+metadata:
+  annotations:
+    prometheus.io/port: "10254"
+    prometheus.io/scrape: "true"
