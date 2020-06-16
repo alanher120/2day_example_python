@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def show_pod_name():
-    return f"""
+  return f"""
             <body style='background-color: green; color: white;'>
               <h1>{os.getenv('HOSTNAME')}</h1>
               <h3>TAG: {os.getenv('TAG')}</h3>
