@@ -8,7 +8,7 @@ steps:
   - echo hello
   
 - name: check-code-style
-  image: python:3.6
+  image: python:3.6-alpine
   commands:
   - pip install --upgrade pip
   - pip install flake8
